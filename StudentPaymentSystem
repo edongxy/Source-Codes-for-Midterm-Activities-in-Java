@@ -1,0 +1,134 @@
+import java.util.Scanner;
+
+public class StudentPaymentSystemCarolina {
+
+    public static void main(String[] args) {
+
+        Scanner input = new Scanner(System.in);
+
+        // Input Student Details
+        System.out.println("===== STUDENT PAYMENT SYSTEM =====");
+
+        System.out.print("Enter Student Name     : ");
+        String studentName = input.nextLine();
+
+        System.out.print("Enter Student ID       : ");
+        String studentID = input.nextLine();
+
+        System.out.print("Enter Total Tuition Fee: ");
+        double tuitionFee = input.nextDouble();
+
+        // Program
+        double balance = tuitionFee; 
+        int transactions = 0;            
+        boolean discountUsed = false;        
+        int choice;
+
+        do {
+            System.out.println();
+            System.out.println("===== PAYMENT MENU =====");
+            System.out.println("1. Pay Tuition");
+            System.out.println("2. Check Balance");
+            System.out.println("3. Apply Discount");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = input.nextInt();
+
+            switch (choice) {
+                case 1:
+                    if (balance <= 0) {
+                        System.out.println();
+                        System.out.println("No remaining balance.");
+                    } else {
+                        System.out.println();
+                        System.out.print("Enter payment amount: ");
+                        double payment = input.nextDouble();
+
+                        if (payment > balance) {
+                            System.out.println();
+                            System.out.println("Invalid Payment. The amount exceeds your remaining balance.");
+                        } else if (payment <= 0) {
+                            System.out.println();
+                            System.out.println("Invalid Payment. Amount must be greater than zero.");
+                        } else {
+                            balance -= payment;
+                            System.out.println();
+                            System.out.printf("Payment of " + payment + " accepted.\n");
+
+                            if (balance == 0) {
+                                System.out.println();
+                                System.out.println("No remaining balance. Account fully paid!");
+                            } else {
+                                System.out.println("Remaining Balance: " + balance);
+                            }
+                        }
+                        transactions++;
+                    }
+                    break;
+                case 2:
+                    System.out.println();
+                    System.out.println("---- Balance Inquiry ----");
+                    if (balance <= 0) {
+                        System.out.println("No remaining balance.");
+                    } else {
+                        System.out.println("Remaining Balance: " + balance);
+                    }
+                    transactions++;
+                    break;
+                case 3:
+                    if (discountUsed) {
+                        System.out.println();
+                        System.out.println("Discount applies once only.");
+                    } else {
+                        System.out.println();
+                        System.out.println("Select student type:");
+                        System.out.println("  1. Scholar");
+                        System.out.println("  2. Regular Student");
+                        System.out.print("Enter choice: ");
+                        int studentType = input.nextInt();
+
+                        if (studentType == 1) {
+                            double discount = balance * 0.20;
+                            balance -= discount;
+                            discountUsed = true;
+                            System.out.println();
+                            System.out.println("Scholar discount applied (20%%). Discount amount: " + discount);
+                            System.out.println("New Balance: " + balance);
+                        } else if (studentType == 2) {
+                            System.out.println();
+                            System.out.println("No discount applicable.");
+                            discountUsed = true;
+                        } else {
+                            System.out.println();
+                            System.out.println("Invalid student type entered.");
+                        }
+                    }
+                    break;
+                case 4:
+                    System.out.println();
+                    System.out.println("===== PAYMENT SUMMARY =====");
+                    System.out.println("Student Name       : " + studentName);
+                    System.out.println("Student ID         : " + studentID);
+                    System.out.println("Total Transactions : " + transactions);
+                    System.out.println( "Final Balance      : " + balance);
+
+                    if (balance <= 0) {
+                        System.out.println("Status             : FULLY PAID");
+                    } else {
+                        System.out.println("Status             : HAVE REMAINING BALANCE");
+                    }
+
+                    System.out.println("======================================");
+                    System.out.println();
+                    System.out.println("Thank you! Goodbye.");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter 1 to 4.");
+                    break;
+            }
+
+        } while (choice != 4);
+
+        input.close();
+    }
+}
