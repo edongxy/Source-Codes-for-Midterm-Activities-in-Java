@@ -1,0 +1,69 @@
+import java.util.Scanner;
+
+public class ExpenseTrackerCarolina {
+
+    // First Enhancement = Accept User Input
+    static Scanner input = new Scanner(System.in);
+
+    static void displayTitle() {
+        System.out.println("=========================================");
+        System.out.println("         PERSONAL EXPENSE TRACKER        ");
+        System.out.println("=========================================");
+        System.out.println();
+    }
+
+    static double calculateTotal(double food, double transportation, double other) {
+        return food + transportation + other;
+    }
+
+    static String checkBudget(double total, double budget) {
+        // Second Enhancment - Compute remaining budget
+        double remaining = budget - total;
+        if (total > budget) {
+            return "You are over the budget by PHP " + remaining;
+        } else if (remaining == 0) {
+            return "Nothing left!"; // Ginawa mo kasing mundo yung alam mo na tao lang
+        } else {
+            return "You are within the budget. Remaining budget is PHP " + remaining ;
+        }
+    }
+
+    public static void displaySummary(double food, double transportation, double other, double total, double budget) {
+        System.out.println("===== EXPENSE SUMMARY =====");
+        System.out.println("Food               : " + food);
+        System.out.println("Transportation     : " + transportation);
+        System.out.println("Other Expenses     : " + other);
+        System.out.println("---------------------------");
+        System.out.println("Total Expenses     : " + total);
+        System.out.println("Monthly Budget     : " + budget);
+        System.out.println("---------------------------");
+        System.out.println(checkBudget(total, budget));
+        System.out.println("===========================");
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+
+        displayTitle();
+
+        // Input Expenses
+        System.out.print("Enter Food Expense          : ");
+        double food = input.nextDouble();
+
+        System.out.print("Enter Transportation Expense: ");
+        double transportation = input.nextDouble();
+
+        System.out.print("Enter Other Expenses        : ");
+        double other = input.nextDouble();
+
+        System.out.print("Enter Monthly Budget        : ");
+        double budget = input.nextDouble();
+
+        System.out.println();
+
+        double total = calculateTotal(food, transportation, other);
+        displaySummary(food, transportation, other, total, budget);
+
+        input.close();
+    }
+}
